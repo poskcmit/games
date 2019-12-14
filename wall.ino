@@ -5,16 +5,17 @@ void setup() {
   lcd.begin(16, 2);
 }
 
-int wallColumn = 0;
+int wallColumn = 16;
 const int wallRow = 2;
 
 void loop() {
   lcd.setCursor(wallColumn, wallRow);
   lcd.print("|");
-  delay(200);
+  delay(300);
+  lcd.clear();
   wallColumn--;
-  if(wallColumn == 0) {
+  if(wallColumn ==-1) {
     wallColumn = 16;
+    delay(random(100, 1000));
   }
-  delay(random(100, 1000));
 }
