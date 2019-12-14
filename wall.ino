@@ -10,6 +10,7 @@ const int wallRow = 2;
 
 void loop() {
   lcd.setCursor(wallColumn, wallRow);
+  lcd.print("|");
   delay(200);
   wallColumn--;
   if(wallColumn == 0) {
