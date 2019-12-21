@@ -98,9 +98,9 @@ void loop() {
   if(hp == 0) {
     hp = 3;
     lcd.clear();
-    lcd.setCursor(5, 0);
+    lcd.setCursor(3, 0);
     lcd.print("GAME OVER");
-    delay(1000);
+    delay(3000);
   }
   lcd.clear();
 }
