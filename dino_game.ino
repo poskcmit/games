@@ -49,8 +49,8 @@ void loop() {
     char button = detectButton(buttonValue);
     if(button == 'R') jeffColumn++;
     if(button == 'L') jeffColumn--;
-    if(button == 'U') jeffRow++;
-    if(button == 'D') jeffRow--;
+    if(button == 'U') jeffRow--;
+    if(button == 'D') jeffRow++;
   }
   suit++;
   if(suit > 1) {
