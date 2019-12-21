@@ -40,26 +40,27 @@ void setup() {
 }
 
 int suit = 0;
-int jeffRow = 0;
-int jeffColumn = 0;
+int yJeff = 0;
+int xJeff = 0;
 int xWall = -99;
 int yWall = -99;
+int hp = 3;
 
 void loop() {
   int buttonValue = analogRead(A0);
   if(buttonValue < 900) {
     char button = detectButton(buttonValue);
     if(button == 'R') {
-      if(jeffColumn < 13) jeffColumn++;
+      if(jeffColumn < 13) xJeff++;
     }
     if(button == 'L') {
-      if(jeffColumn > 0) jeffColumn--;
+      if(jeffColumn > 0) xJeff--;
     }
     if(button == 'U') {
-      if(jeffRow == 1) jeffRow--;
+      if(jeffRow == 1) yJeff--;
     }
     if(button == 'D') {
-      if(jeffRow == 0) jeffRow++;
+      if(jeffRow == 0) yJeff++;
     }
   }
   suit++;
@@ -77,16 +78,22 @@ void loop() {
     xWall = -99;
   }
   
+  if(xWall == xJeff && yWall == yJeff) {
+    hp--;
+  }
+  
   if(xWall != -99) {
     lcd.setCursor(xWall, yWall);
     lcd.print("|");
   }
-  lcd.setCursor(jeffColumn, jeffRow);
+  lcd.setCursor(xJeff, yJeff);
   lcd.write(byte(suit));
   lcd.setCursor(14, 0);
   lcd.print("|");
   lcd.setCursor(14, 1);
   lcd.print("|");
+  lcd.setCursor(15, 0);
+  lcd.print(hp);
   delay(250);
   lcd.clear();
 }
