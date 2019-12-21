@@ -93,7 +93,7 @@ void loop() {
   lcd.setCursor(14, 1);
   lcd.print("|");
   lcd.setCursor(15, 0);
-  lcd.print(hp);
+  lcd.print(hp, DEC);
   delay(250);
   lcd.clear();
 }
