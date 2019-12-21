@@ -77,6 +77,8 @@ void loop() {
     xWall = -1;
   }
   
+  lcd.setCursor(xWall, yWall);
+  lcd.print("|");
   lcd.setCursor(jeffColumn, jeffRow);
   lcd.write(byte(suit));
   delay(250);
