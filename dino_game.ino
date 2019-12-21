@@ -68,11 +68,11 @@ void loop() {
   }
   
   if(yWall == -99) {
-    xWall = 15;
+    xWall = 14;
     yWall = random(0, 2);
   }
   xWall--;
-  if(xWall == 0) {
+  if(xWall == -1) {
     yWall = -99;
     xWall = -99;
   }
@@ -81,6 +81,10 @@ void loop() {
   lcd.print("|");
   lcd.setCursor(jeffColumn, jeffRow);
   lcd.write(byte(suit));
+  lcd.setCursor(14, 0);
+  lcd.print("|");
+  lcd.setCursor(14, 1);
+  lcd.print("|");
   delay(250);
   lcd.clear();
 }
