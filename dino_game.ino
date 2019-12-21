@@ -42,13 +42,15 @@ void setup() {
 int suit = 0;
 int jeffRow = 0;
 int jeffColumn = 0;
+int xWall = -1;
+int yWall = -1;
 
 void loop() {
   int buttonValue = analogRead(A0);
   if(buttonValue < 900) {
     char button = detectButton(buttonValue);
     if(button == 'R') {
-      if(jeffColumn < 16) jeffColumn++;
+      if(jeffColumn < 15) jeffColumn++;
     }
     if(button == 'L') {
       if(jeffColumn > 0) jeffColumn--;
@@ -63,6 +65,16 @@ void loop() {
   suit++;
   if(suit > 1) {
     suit = 0;
+  }
+  
+  if(yWall == -1) {
+    xWall = 15;
+    yWall = random(0, 2);
+  }
+  xWall--;
+  if(xWall == 0) {
+    yWall = -1;
+    xWall = -1;
   }
   
   lcd.setCursor(jeffColumn, jeffRow);
