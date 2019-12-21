@@ -47,10 +47,18 @@ void loop() {
   int buttonValue = analogRead(A0);
   if(buttonValue < 900) {
     char button = detectButton(buttonValue);
-    if(button == 'R') jeffColumn++;
-    if(button == 'L') jeffColumn--;
-    if(button == 'U') jeffRow--;
-    if(button == 'D') jeffRow++;
+    if(button == 'R') {
+      if(jeffColumn < 16) jeffColumn++;
+    }
+    if(button == 'L') {
+      if(jeffColumn > 0) jeffColumn--;
+    }
+    if(button == 'U') {
+      if(jeffRow == 1) jeffRow--;
+    }
+    if(button == 'D') {
+      if(jeffRow == 0) jeffRow++;
+    }
   }
   suit++;
   if(suit > 1) {
