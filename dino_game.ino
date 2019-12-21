@@ -3,10 +3,10 @@ LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
 char detectButton(int portValue) {
   if(portValue <= 80) return 'R';
-  if(portValue > 80 && portValue <= 200) return 'U';
-  if(portValue > 200 && portValue <= 400) return 'D';
-  if(portValue > 400 && portValue <= 600) return 'L';
-  if(portValue > 600 && portValue <= 800) return 'S';
+  else if(portValue <= 200) return 'U';
+  else if(portValue <= 400) return 'D';
+  else if(portValue <= 600) return 'L';
+  else if(portValue <= 800) return 'S';
   return 'N';
 }
 
