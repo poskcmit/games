@@ -51,16 +51,16 @@ void loop() {
   if(buttonValue < 900) {
     char button = detectButton(buttonValue);
     if(button == 'R') {
-      if(jeffColumn < 13) xJeff++;
+      if(xJeff < 13) xJeff++;
     }
     if(button == 'L') {
-      if(jeffColumn > 0) xJeff--;
+      if(xJeff > 0) xJeff--;
     }
     if(button == 'U') {
-      if(jeffRow == 1) yJeff--;
+      if(yJeff == 1) yJeff--;
     }
     if(button == 'D') {
-      if(jeffRow == 0) yJeff++;
+      if(yJeff == 0) yJeff++;
     }
   }
   suit++;
