@@ -77,8 +77,10 @@ void loop() {
     xWall = -99;
   }
   
-  lcd.setCursor(xWall, yWall);
-  lcd.print("|");
+  if(xWall != -99) {
+    lcd.setCursor(xWall, yWall);
+    lcd.print("|");
+  }
   lcd.setCursor(jeffColumn, jeffRow);
   lcd.write(byte(suit));
   lcd.setCursor(14, 0);
