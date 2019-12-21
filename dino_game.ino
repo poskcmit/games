@@ -50,7 +50,7 @@ void loop() {
   if(buttonValue < 900) {
     char button = detectButton(buttonValue);
     if(button == 'R') {
-      if(jeffColumn < 15) jeffColumn++;
+      if(jeffColumn < 13) jeffColumn++;
     }
     if(button == 'L') {
       if(jeffColumn > 0) jeffColumn--;
