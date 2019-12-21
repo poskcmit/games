@@ -97,6 +97,10 @@ void loop() {
   delay(250);
   if(hp == 0) {
     hp = 3;
+    xJeff = 0;
+    yJeff = 0;
+    xWall = -99;
+    yWall = -99;
     lcd.clear();
     lcd.setCursor(3, 0);
     lcd.print("GAME OVER");
