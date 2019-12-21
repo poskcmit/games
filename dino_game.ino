@@ -42,8 +42,8 @@ void setup() {
 int suit = 0;
 int jeffRow = 0;
 int jeffColumn = 0;
-int xWall = -1;
-int yWall = -1;
+int xWall = -99;
+int yWall = -99;
 
 void loop() {
   int buttonValue = analogRead(A0);
@@ -67,14 +67,14 @@ void loop() {
     suit = 0;
   }
   
-  if(yWall == -1) {
+  if(yWall == -99) {
     xWall = 15;
     yWall = random(0, 2);
   }
   xWall--;
   if(xWall == 0) {
-    yWall = -1;
-    xWall = -1;
+    yWall = -99;
+    xWall = -99;
   }
   
   lcd.setCursor(xWall, yWall);
