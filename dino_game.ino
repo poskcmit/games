@@ -95,5 +95,12 @@ void loop() {
   lcd.setCursor(15, 0);
   lcd.print(hp, DEC);
   delay(250);
+  if(hp == 0) {
+    hp = 3;
+    lcd.clear();
+    lcd.setCursor(5, 0);
+    lcd.print("GAME OVER");
+    delay(1000);
+  }
   lcd.clear();
 }
