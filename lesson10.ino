@@ -11,6 +11,7 @@ char detectButton(int analog) {
 }
 
 void setup() {
+  randomSeed(A0);
   lcd.begin(16, 2);
   pinMode(RetroEclairage, OUTPUT);
   digitalWrite(RetroEclairage, HIGH);
@@ -21,16 +22,42 @@ void setup() {
 int x = 0;
 int y = 0;
 
+int appleX = 0;
+int appleY = 0;
+boolean appleFlag = true;
+
 void loop() {
   int buttonValue = analogRead(A0);
   if(buttonValue < 900) {
     char button = detectButton(buttonValue);
     if(button == 'R') {
-      // x = x + 1;
-      x++;
+      if(x < 16) {
+      	x++;
+      }
+    }
+    if(button == 'L') {
+      x--;
+    }
+    if(button == 'U') {
+      y--;
+    }
+    if(button == 'D') {
+      y++;
     }
   }
   
+  if (appleFlag) {
+    appleX = random(0, 13);
+    appleY = random(0, 2);
+    appleFlag = false;
+  }
+  
+  if (appleX == x && appleY == y) {
+    appleFlag = true;
+  }
+  
+  lcd.setCursor(appleX, appleY);
+  lcd.print("o");
   lcd.setCursor(x, y);
   lcd.print("A");
   delay(100);
