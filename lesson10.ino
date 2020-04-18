@@ -19,6 +19,8 @@ void setup() {
   digitalWrite(RetroEclairage, LOW);
 }
 
+int time = 0;
+
 int x = 0;
 int y = 0;
 
@@ -27,25 +29,33 @@ int appleY = 0;
 boolean appleFlag = true;
 
 void loop() {
+  // перемещения персонажа
   int buttonValue = analogRead(A0);
   if(buttonValue < 900) {
     char button = detectButton(buttonValue);
     if(button == 'R') {
-      if(x < 16) {
+      if(x < 12) {
       	x++;
       }
     }
     if(button == 'L') {
-      x--;
+      if(x > 0) {
+      	x--;
+      }
     }
     if(button == 'U') {
-      y--;
+      if(y > 0) {
+      	y--;
+      }
     }
     if(button == 'D') {
-      y++;
+      if (y < 1) {
+      	y++;
+      }
     }
   }
   
+  // логика посторонних объектов
   if (appleFlag) {
     appleX = random(0, 13);
     appleY = random(0, 2);
@@ -56,10 +66,19 @@ void loop() {
     appleFlag = true;
   }
   
+  time += 100;
+  
+  // отрисовка
   lcd.setCursor(appleX, appleY);
   lcd.print("o");
   lcd.setCursor(x, y);
   lcd.print("A");
+  lcd.setCursor(13, 0);
+  lcd.print("|");
+  lcd.setCursor(13, 1);
+  lcd.print("|");
+  lcd.setCursor(14, 1);
+  lcd.print(time / 1000);
   delay(100);
   lcd.clear();
 }
