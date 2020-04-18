@@ -20,7 +20,7 @@ void setup() {
 }
 
 int time = 0;
-
+// дз завести переменную - счетчик яблок
 int x = 0;
 int y = 0;
 
@@ -64,6 +64,7 @@ void loop() {
   
   if (appleX == x && appleY == y) {
     appleFlag = true;
+    // дз здесь мы съели яблоко, нужно увеличить счетчик яблок на 1
   }
   
   time += 100;
@@ -79,6 +80,7 @@ void loop() {
   lcd.print("|");
   lcd.setCursor(14, 1);
   lcd.print(time / 1000);
+  // дз здесь нужно отрисовать счетчик на (14, 0)
   delay(100);
   lcd.clear();
 }
