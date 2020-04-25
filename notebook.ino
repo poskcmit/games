@@ -5,7 +5,7 @@ LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 #define alphabetLastIndex 5
 
 char detectedButton = '0';
-String alphabet[alphabetSize] = {"a", "b", "c", "d", "e", " "};
+char alphabet[alphabetSize] = {'a', 'b', 'c', 'd', 'e', ' '};
 int letterIndex = alphabetLastIndex;
 char pressedButton = '0';
 int positionX = 0;
