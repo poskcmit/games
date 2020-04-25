@@ -8,24 +8,30 @@ char detectButton(int analog) {
   if ( (analog > 240) && (analog < 350) ) return 'D';
   if ( (analog > 400) && (analog < 500) ) return 'L';
   if ( (analog > 600) && (analog < 750) ) return 'S';
+  return '0';
 }
 
-int letters[6] = {"a", "b", "c", "d", "e", " "};
+String letters[6] = {"a", "b", "c", "d", "e", " "};
+
 
 void setup() {
+  Serial.begin(9600);
   lcd.begin(16, 2);
+  pinMode(A0, INPUT);
   pinMode(input, OUTPUT);
   digitalWrite(input, HIGH);
-  delay(100);
-  digitalWrite(input, LOW);
 }
 
 int letterIndex = 0;
+char pressedButton = '0';
 
 void loop() {
   int buttonValue = analogRead(A0);
-  while(detectButton(buttonValue) != 'U') {};
-  letterIndex++;
+  Serial.println(buttonValue);
+  while(buttonValue > 900) {Serial.println(buttonValue);};
+  pressedButton = detectButton(buttonValue);
+  Serial.println(pressedButton);
   lcd.setCursor(0, 0);
-  lcd.print(letter[letterIndex]);
+  lcd.print(letters[0]);
 }
+
