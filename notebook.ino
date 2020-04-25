@@ -1,18 +1,40 @@
 #include <LiquidCrystal.h>
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 #define input 10
+#define alphabetSize 6
+#define alphabetLastIndex 5
 
-char detectButton(int analog) {
-  if (analog < 50) return 'R';
-  if ( (analog > 95) && (analog < 150) ) return 'U';
-  if ( (analog > 240) && (analog < 350) ) return 'D';
-  if ( (analog > 400) && (analog < 500) ) return 'L';
-  if ( (analog > 600) && (analog < 750) ) return 'S';
-  return '0';
+char detectedButton = '0';
+String letters[alphabetSize] = {"a", "b", "c", "d", "e", " "};
+int letterIndex = alphabetLastIndex;
+char pressedButton = '0';
+int positionX = 0;
+
+char detectButton() {
+  int analog = analogRead(A0);
+  if (analog < 50) detectedButton = 'R';
+  else if ( (analog > 95) && (analog < 150) ) detectedButton = 'U';
+  else if ( (analog > 240) && (analog < 350) ) detectedButton = 'D';
+  else if ( (analog > 400) && (analog < 500) ) detectedButton = 'L';
+  else if ( (analog > 600) && (analog < 750) ) detectedButton = 'S';
+  else detectedButton = '0';
 }
 
-String letters[6] = {"a", "b", "c", "d", "e", " "};
+void handleUp() {
+  if (letterIndex < alphabetLastIndex) {
+    letterIndex++;
+  } else {
+    letterIndex = 0;
+  }
+}
 
+void handleDown() {
+  if (letterIndex > 0) {
+    letterIndex--;
+  } else {
+    letterIndex = alphabetLastIndex;
+  }
+}
 
 void setup() {
   Serial.begin(9600);
@@ -22,16 +44,25 @@ void setup() {
   digitalWrite(input, HIGH);
 }
 
-int letterIndex = 0;
-char pressedButton = '0';
-
 void loop() {
-  int buttonValue = analogRead(A0);
-  Serial.println(buttonValue);
-  while(buttonValue > 900) {Serial.println(buttonValue);};
-  pressedButton = detectButton(buttonValue);
-  Serial.println(pressedButton);
-  lcd.setCursor(0, 0);
-  lcd.print(letters[0]);
-}
+  while(detectedButton != 'U' && detectedButton != 'D' && detectedButton != 'R' && detectedButton != 'L') {
+    detectButton();  
+  }
 
+  if(detectedButton == 'U') {
+    handleUp();
+  } else if (detectedButton == 'D') {
+    handleDown();
+  } else if (detectedButton == 'R') {
+    positionX++;
+    letterIndex = alphabetLastIndex;
+  } else if (detectedButton == 'L') {
+    positionX--;
+    letterIndex = alphabetLastIndex;
+  }
+  
+  lcd.setCursor(positionX, 0);
+  lcd.print(letters[letterIndex]);
+  delay(500);
+  detectedButton = '0';
+}
