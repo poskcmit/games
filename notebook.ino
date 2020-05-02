@@ -1,3 +1,4 @@
+#include <EEPROM.h>
 #include <LiquidCrystal.h>
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 #define input 10
@@ -7,7 +8,7 @@ LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 char detectedButton = '0';
 char alphabet[alphabetSize] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', ' '};
 int letterIndex = alphabetLastIndex;
-int positionX = 0;
+int position = 0;
 
 char detectButton() {
   int analog = analogRead(A0);
@@ -36,16 +37,27 @@ void handleDown() {
 }
 
 void handleRight() {
-  positionX++;
+  // EEPROM.put(0, letterIndex);
+  if (position < 31) {
+  	position++;
+  } else {
+    position = 0;
+  }
   letterIndex = alphabetLastIndex;
 }
 
 void handleLeft() {
-  positionX--;
+  // EEPROM.put(0, letterIndex);
+  if (position > 0) {
+  	position--;
+  } else {
+    position = 31;
+  }
   letterIndex = alphabetLastIndex;
 }
 
 void setup() {
+  Serial.begin(9600);
   lcd.begin(16, 2);
   pinMode(A0, INPUT);
   pinMode(input, OUTPUT);
@@ -67,8 +79,11 @@ void loop() {
     handleLeft();
   }
   
-  lcd.setCursor(positionX, 0);
+  lcd.setCursor(position % 16, position / 16);
+ 
   lcd.print(alphabet[letterIndex]);
   delay(200);
   detectedButton = '0';
+  // char s = alphabet[EEPROM.read(0)];
+  // Serial.println(s);
 }
