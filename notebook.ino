@@ -1,13 +1,12 @@
 #include <LiquidCrystal.h>
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 #define input 10
-#define alphabetSize 6
-#define alphabetLastIndex 5
+#define alphabetSize 8
+#define alphabetLastIndex 7
 
 char detectedButton = '0';
-char alphabet[alphabetSize] = {'a', 'b', 'c', 'd', 'e', ' '};
+char alphabet[alphabetSize] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', ' '};
 int letterIndex = alphabetLastIndex;
-char pressedButton = '0';
 int positionX = 0;
 
 char detectButton() {
@@ -36,8 +35,17 @@ void handleDown() {
   }
 }
 
+void handleRight() {
+  positionX++;
+  letterIndex = alphabetLastIndex;
+}
+
+void handleLeft() {
+  positionX--;
+  letterIndex = alphabetLastIndex;
+}
+
 void setup() {
-  Serial.begin(9600);
   lcd.begin(16, 2);
   pinMode(A0, INPUT);
   pinMode(input, OUTPUT);
@@ -45,7 +53,7 @@ void setup() {
 }
 
 void loop() {
-  while(detectedButton != 'U' && detectedButton != 'D' && detectedButton != 'R' && detectedButton != 'L') {
+  while(detectedButton == '0') {
     detectButton();  
   }
 
@@ -54,15 +62,13 @@ void loop() {
   } else if (detectedButton == 'D') {
     handleDown();
   } else if (detectedButton == 'R') {
-    positionX++;
-    letterIndex = alphabetLastIndex;
+	handleRight();
   } else if (detectedButton == 'L') {
-    positionX--;
-    letterIndex = alphabetLastIndex;
+    handleLeft();
   }
   
   lcd.setCursor(positionX, 0);
   lcd.print(alphabet[letterIndex]);
-  delay(500);
+  delay(200);
   detectedButton = '0';
 }
