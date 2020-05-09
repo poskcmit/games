@@ -10,6 +10,16 @@ char alphabet[alphabetSize] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', ' '};
 int letterIndex = 0;
 int position = 0;
 
+int state[32] = {7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7};
+
+void printState() {
+  for (int i = 0; i < 32; ++i) {
+    lcd.setCursor( i % 16, i / 16 );
+    int letterIndex = state[i];
+    lcd.print(alphabet[letterIndex]);
+  }
+}
+
 char detectButton() {
   int analog = analogRead(A0);
   if (analog < 50) detectedButton = 'R';
@@ -26,6 +36,8 @@ void handleUp() {
   } else {
     letterIndex = 0;
   }
+  state[position] = letterIndex;
+  printState();
 }
 
 void handleDown() {
@@ -34,6 +46,8 @@ void handleDown() {
   } else {
     letterIndex = alphabetLastIndex;
   }
+  state[position] = letterIndex;
+  printState();
 }
 
 void handleRight() {
@@ -62,7 +76,7 @@ void setup() {
   pinMode(A0, INPUT);
   pinMode(input, OUTPUT);
   digitalWrite(input, HIGH);
-  lcd.print(alphabet[letterIndex]);
+  printState();
 }
 
 void loop() {
@@ -80,9 +94,9 @@ void loop() {
     handleLeft();
   }
   
-  lcd.setCursor(position % 16, position / 16);
+  //lcd.setCursor(position % 16, position / 16);
  
-  lcd.print(alphabet[letterIndex]);
+  //lcd.print(alphabet[letterIndex]);
   delay(200);
   detectedButton = '0';
   // char s = alphabet[EEPROM.read(0)];
