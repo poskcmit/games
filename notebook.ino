@@ -7,7 +7,7 @@ LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
 char detectedButton = '0';
 char alphabet[alphabetSize] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', ' '};
-int letterIndex = alphabetLastIndex;
+int letterIndex = 0;
 int position = 0;
 
 char detectButton() {
@@ -43,7 +43,7 @@ void handleRight() {
   } else {
     position = 0;
   }
-  letterIndex = alphabetLastIndex;
+  letterIndex = 0;
 }
 
 void handleLeft() {
@@ -53,7 +53,7 @@ void handleLeft() {
   } else {
     position = 31;
   }
-  letterIndex = alphabetLastIndex;
+  letterIndex = 0;
 }
 
 void setup() {
@@ -62,6 +62,7 @@ void setup() {
   pinMode(A0, INPUT);
   pinMode(input, OUTPUT);
   digitalWrite(input, HIGH);
+  lcd.print(alphabet[letterIndex]);
 }
 
 void loop() {
