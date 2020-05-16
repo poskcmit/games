@@ -6,11 +6,11 @@ LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 #define alphabetLastIndex 7
 
 char detectedButton = '0';
-char alphabet[alphabetSize] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', ' '};
+char alphabet[alphabetSize] = {' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g' };
 int letterIndex = 0;
 int position = 0;
 
-int state[32] = {7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7};
+int state[32] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 void printState() {
   for (int i = 0; i < 32; ++i) {
@@ -37,6 +37,7 @@ void handleUp() {
     letterIndex = 0;
   }
   state[position] = letterIndex;
+  EEPROM.put(0, state);
   printState();
 }
 
@@ -47,13 +48,13 @@ void handleDown() {
     letterIndex = alphabetLastIndex;
   }
   state[position] = letterIndex;
+  EEPROM.put(0, state);
   printState();
 }
 
 void handleRight() {
-  // EEPROM.put(0, letterIndex);
   if (position < 31) {
-  	position++;
+    position++;
   } else {
     position = 0;
   }
@@ -61,9 +62,8 @@ void handleRight() {
 }
 
 void handleLeft() {
-  // EEPROM.put(0, letterIndex);
   if (position > 0) {
-  	position--;
+    position--;
   } else {
     position = 31;
   }
@@ -71,11 +71,11 @@ void handleLeft() {
 }
 
 void setup() {
-  Serial.begin(9600);
+  EEPROM.get(0, state);
   lcd.begin(16, 2);
   pinMode(A0, INPUT);
   pinMode(input, OUTPUT);
-  digitalWrite(input, HIGH);
+  analogWrite(input, 20);
   printState();
 }
 
@@ -89,16 +89,11 @@ void loop() {
   } else if (detectedButton == 'D') {
     handleDown();
   } else if (detectedButton == 'R') {
-	handleRight();
+  handleRight();
   } else if (detectedButton == 'L') {
     handleLeft();
   }
   
-  //lcd.setCursor(position % 16, position / 16);
- 
-  //lcd.print(alphabet[letterIndex]);
   delay(200);
   detectedButton = '0';
-  // char s = alphabet[EEPROM.read(0)];
-  // Serial.println(s);
 }
